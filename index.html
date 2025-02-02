@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tebak Huruf Hiragana</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        .question {
+            font-size: 48px;
+            margin: 20px 0;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Tebak Huruf Hiragana</h1>
+    <div class="question" id="hiragana"></div>
+    <input type="text" id="userAnswer" placeholder="Masukkan jawaban Anda">
+    <button onclick="checkAnswer()">Cek Jawaban</button>
+    <p class="result" id="result"></p>
+
+    <script>
+        // Daftar huruf Hiragana dan jawaban yang benar
+        const hiraganaList = [
+        // hiragana asli
+            { character: 'あ', answer: 'a' },
+            { character: 'い', answer: 'i' },
+            { character: 'う', answer: 'u' },
+            { character: 'え', answer: 'e' },
+            { character: 'お', answer: 'o' },
+  
+            { character: 'カ', answer: 'ka' },
+            { character: 'キ', answer: 'ki' },
+            { character: 'く', answer: 'ku' },
+            { character: 'け', answer: 'ke' },
+            { character: 'こ', answer: 'ko' },
+  
+            { character: 'さ', answer: 'sa' },
+            { character: 'し', answer: 'shi' },
+            { character: 'す', answer: 'su' },
+            { character: 'せ', answer: 'se' },
+            { character: 'そ', answer: 'so' },
+     
+            { character: 'た', answer: 'ta' },
+            { character: 'ち', answer: 'chi' },
+            { character: 'つ', answer: 'tsu' },
+            { character: 'て', answer: 'te' },
+            { character: 'と', answer: 'to' },
+  
+            { character: 'な', answer: 'na' },
+            { character: 'に', answer: 'ni' },
+            { character: 'ぬ', answer: 'nu' },
+            { character: 'ね', answer: 'ne' },
+            { character: 'の', answer: 'no' },
+     
+            { character: 'は', answer: 'ha' },
+            { character: 'ひ', answer: 'hi' },
+            { character: 'ふ', answer: 'fu' },
+            { character: 'ふ', answer: 'he' },
+            { character: 'ほ', answer: 'ho' },
+  
+            { character: 'ま', answer: 'ma' },
+            { character: 'み', answer: 'mi' },
+            { character: 'む', answer: 'mu' },
+            { character: 'め', answer: 'me' },
+            { character: 'も', answer: 'mo' },
+  
+            { character: 'ら', answer: 'ra' },
+            { character: 'り', answer: 'ri' },
+            { character: 'る', answer: 'ru' },
+            { character: 'れ', answer: 're' },
+            { character: 'ろ', answer: 'ro' },
+  
+            { character: 'や', answer: 'ya' },
+            { character: 'ゆ', answer: 'yu' },
+            { character: 'よ', answer: 'yo' },
+  
+            { character: 'わ', answer: 'wa' },
+            { character: 'を', answer: 'wo' },
+  
+            { character: 'ん', answer: 'n' },
+  
+        //Dakuten dan Handakuten *lag
+            { character: 'が', answer: 'ga' },
+            { character: 'ぎ', answer: 'gi' },
+            { character: 'ぐ', answer: 'gu' },
+            { character: 'げ', answer: 'ge' },
+            { character: 'ご', answer: 'go' },
+  
+            { character: 'ざ', answer: 'za' },
+            { character: 'じ', answer: 'zi' },
+            { character: 'ず', answer: 'zu' },
+            { character: 'ぜ', answer: 'ze' },
+            { character: 'ぞ', answer: 'zo' },
+  
+            { character: 'だ', answer: 'da' },
+            { character: 'ぢ', answer: 'di' },
+            { character: 'っ', answer: 'du' },
+            { character: 'で', answer: 'de' },
+            { character: 'ど', answer: 'do' },
+  
+            { character: 'ば', answer: 'ba' },
+            { character: 'び', answer: 'bi' },
+            { character: 'ぶ', answer: 'bu' },
+            { character: 'べ', answer: 'be' },
+            { character: 'ぼ', answer: 'bo' },
+  
+            { character: 'ぱ', answer: 'pa' },
+            { character: 'ぴ', answer: 'pi' },
+            { character: 'ぷ', answer: 'pu' },
+            { character: 'ぺ', answer: 'pe' },
+            { character: 'ぽ', answer: 'po' },
+  
+        ];
+
+        // Pilih huruf Hiragana secara acak
+        let currentQuestion = hiraganaList[Math.floor(Math.random() * hiraganaList.length)];
+
+        // Tampilkan huruf Hiragana
+        document.getElementById('hiragana').textContent = currentQuestion.character;
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById('userAnswer').value.toLowerCase();
+            const resultElement = document.getElementById('result');
+
+            if (userAnswer === currentQuestion.answer) {
+                resultElement.textContent = "Jawaban Anda benar!";
+                resultElement.className = "result correct";
+            } else {
+                resultElement.textContent = "Jawaban Anda salah! Jawaban yang benar adalah: " + currentQuestion.answer;
+                resultElement.className = "result incorrect";
+            }
+
+            // Pilih pertanyaan baru setelah menjawab
+            currentQuestion = hiraganaList[Math.floor(Math.random() * hiraganaList.length)];
+            document.getElementById('hiragana').textContent = currentQuestion.character;
+            document.getElementById('userAnswer').value = ''; // Kosongkan input
+        }
+    </script>
+
+</body>
+  </html>
